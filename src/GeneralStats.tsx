@@ -1,3 +1,9 @@
+import {
+    makeStyles,
+    shorthands,
+    tokens
+} from "@fluentui/react-components";
+
 export interface GeneralStatsData {
     callId: string
     participantId?: string
@@ -13,17 +19,29 @@ export interface GeneralStatsData {
 }
 
 interface GeneralStatsProps {
-    data: GeneralStatsData,
-    visibility: boolean
+    data: GeneralStatsData
 }
+
+const useStyles = makeStyles({
+    propsTable: {
+      "& td:first-child": {
+        fontWeight: tokens.fontWeightSemibold,
+      },
+      "& td": {
+        ...shorthands.padding(0, "30px", 0, 0),
+      },
+    },
+});
 
 function GeneralStats(props: GeneralStatsProps) {
     const generalStats = props.data;
 
+    const styles = useStyles();
+
     const renderList = (participantList: string[] | undefined) => {
         if(participantList && participantList.length > 0) {
             return participantList.map((value) => {
-                <li>{value}</li>
+                return <li>{value}</li>
             });
         }
         else {
@@ -32,28 +50,50 @@ function GeneralStats(props: GeneralStatsProps) {
     }
 
     return (
-    <dl style={{visibility: props.visibility ? "visible" : "hidden"}} id="generalStatsTable">
-        <dt id='callId'>Call Id</dt>
-        <dd id='callIdValue'>{generalStats.callId}</dd>
-        <dt id='participantId'>Participant Id</dt>
-        <dd id='participantIdValue'>{generalStats.participantId}</dd>
-        <dt id='remoteParticipants'>Remote Participants</dt>
-        <dd id='remoteParticipantsValue'><ul>{renderList(generalStats.remoteParticipants)}</ul></dd>
-        <dt id='dominantSpeakers'>Dominant Speaker Ids</dt>
-        <dd id='dominantSpeakersValue'><ul>{renderList(generalStats.dominantSpeakers)}</ul></dd>
-        <dt id='isRecording'>Is Recording</dt>
-        <dd id='isRecordingValue'>{generalStats.isRecording}</dd>
-        <dt id='isTranscribing'>Is Transcribing</dt>
-        <dd id='isTranscribingValue'>{generalStats.isTranscribing}</dd>
-        <dt id='isScreenSharing'>Is Screen Sharing</dt>
-        <dd id='isScreenSharingValue'>{generalStats.isScreenSharing}</dd>
-        <dt id='chosenCamera'>Chosen Camera</dt>
-        <dd id='chosenCameraValue'>{generalStats.chosenCamera}</dd>
-        <dt id='chosenMicrophone'>Chosen Microphone</dt>
-        <dd id='chosenMicrophoneValue'>{generalStats.chosenMicrophone}</dd>
-        <dt id='userInfo'>User Info</dt>
-        <dd id='userInfoValue'>{generalStats.userInfo}</dd>
-    </dl>
+        <table id="generalStatsTable" className={styles.propsTable}>
+            <tbody>
+                <tr>
+                    <td>Call Id</td>
+                    <td>{generalStats.callId}</td>
+                </tr>
+                <tr>
+                    <td id='participantId'>Participant Id</td>
+                    <td id='participantIdValue'>{generalStats.participantId}</td>
+                </tr>
+                <tr>
+                    <td id='remoteParticipants'>Remote Participants</td>
+                    <td id='remoteParticipantsValue'><ul>{renderList(generalStats.remoteParticipants)}</ul></td>
+                </tr>
+                <tr>
+                    <td id='dominantSpeakers'>Dominant Speaker Ids</td>
+                    <td id='dominantSpeakersValue'><ul>{renderList(generalStats.dominantSpeakers)}</ul></td>
+                </tr>
+                <tr>
+                    <td id='isRecording'>Is Recording</td>
+                    <td id='isRecordingValue'>{generalStats.isRecording}</td>
+                </tr>
+                <tr>
+                    <td id='isTranscribing'>Is Transcribing</td>
+                    <td id='isTranscribingValue'>{generalStats.isTranscribing}</td>
+                </tr>
+                <tr>
+                    <td id='isScreenSharing'>Is Screen Sharing</td>
+                    <td id='isScreenSharingValue'>{generalStats.isScreenSharing}</td>
+                </tr>
+                <tr>
+                    <td id='chosenCamera'>Chosen Camera</td>
+                    <td id='chosenCameraValue'>{generalStats.chosenCamera}</td>
+                </tr>
+                <tr>
+                    <td id='chosenMicrophone'>Chosen Microphone</td>
+                    <td id='chosenMicrophoneValue'>{generalStats.chosenMicrophone}</td>
+                </tr>
+                <tr>
+                    <td id='userInfo'>User Info</td>
+                    <td id='userInfoValue'>{generalStats.userInfo}</td>
+                </tr>
+            </tbody>
+        </table>
     )
 }
 
